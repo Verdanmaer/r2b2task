@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./Table.css";
+import Homeworld from './Homeworld';
 type Props = {
   // rows: any[];
   rowsCount: number;
@@ -15,7 +16,7 @@ const Table = ({  rowsCount, results }: Props) => {
   // TASK: make a button and fetch persons's homeworld on click. You can fetch directly SW api (https://swapi.dev/documentation#planets) if you want.
   const [homeworld, setHomeworld] = React.useState<any | null>(null);
   // const [planets, setPlanets] = React.useState<Data>({count: 0, results: []});
-  const [planets, setPlanets] = React.useState({name: ''});
+  // const [planets, setPlanets] = React.useState({name: ''});
   const planet = 2;
 
   // React.useEffect(() => {
@@ -26,19 +27,6 @@ const Table = ({  rowsCount, results }: Props) => {
 
   // console.log(planets);
 
-  
-  
-  const fetchHomeworld = (homeworld: string) => {
-    let planet = homeworld.match(/\d+/g);
-
-    fetch(`https://swapi.dev/api/planets/${planet}`)
-      .then((r) => r.json())
-      .then(setPlanets);
-
-    console.log(planets.name);
-    setHomeworld(planets.name);
-  }
-
   const displayData = results?.map((data: any) => {
     return (
       <tr key={data.created}>
@@ -48,8 +36,7 @@ const Table = ({  rowsCount, results }: Props) => {
         <td>{data.gender}</td>
         <td>{data.hair_color}</td>
         <td>{data.height}</td>
-        {/* <td>{homeworld}</td> */}
-        <td><button onClick={() => fetchHomeworld(data.homeworld)}>{homeworld}</button></td>
+        <td><Homeworld homeworld={data.homeworld}/></td>
         <td>{data.mass}</td>
         <td>{data.skin_color}</td>
         <td>{data.created}</td>
