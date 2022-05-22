@@ -12,6 +12,7 @@ function App() {
   const [data, setData] = React.useState<Data>({ count: 0, results: [] });
   const [dummyData, setDummyData] = React.useState<Data>({count: 0, results: []});
   const [q, setQ] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     // TASK: add `dummy` query parameter
@@ -38,14 +39,13 @@ function App() {
       <h2>Dummy table here</h2>
       {/* // HINT: notify user that we are fetching data. for example with a spinner */}
       <div className="App-table-container">
-        <Spinner />
-        <DummyTable rowsCount={dummyData.count} results={dummyData.results} />
+        <DummyTable rowsCount={dummyData.count} results={dummyData.results} isLoading={isLoading} />
       </div>
       <hr />
       <h2>Your table here</h2>
       <input type="text" value={q} onChange={(e) => setQ(e.target.value)}/>
       <div>
-        <Table rowsCount={data.count} results={search(data.results)}/>
+        <Table rowsCount={data.count} results={search(data.results)} isLoading={isLoading}/>
       </div>
     </div>
   );

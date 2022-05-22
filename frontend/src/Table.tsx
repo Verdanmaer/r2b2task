@@ -1,31 +1,16 @@
 import * as React from "react";
 import "./Table.css";
 import Homeworld from './Homeworld';
+import Spinner from './Spinner';
+
 type Props = {
-  // rows: any[];
   rowsCount: number;
   results?: any;
+  isLoading: boolean;
 };
 
-// type Data = {
-//   count: number;
-//   results: any[];
-// }
-
-const Table = ({  rowsCount, results }: Props) => {
+const Table = ({  rowsCount, results, isLoading }: Props) => {
   // TASK: make a button and fetch persons's homeworld on click. You can fetch directly SW api (https://swapi.dev/documentation#planets) if you want.
-  const [homeworld, setHomeworld] = React.useState<any | null>(null);
-  // const [planets, setPlanets] = React.useState<Data>({count: 0, results: []});
-  // const [planets, setPlanets] = React.useState({name: ''});
-  const planet = 2;
-
-  // React.useEffect(() => {
-  //   fetch(`/api/planets.php/planet=${planet}`)
-  //   .then((r) => r.json())
-  //   .then(setPlanets)
-  // }, [])
-
-  // console.log(planets);
 
   const displayData = results?.map((data: any) => {
     return (
@@ -60,7 +45,7 @@ const Table = ({  rowsCount, results }: Props) => {
       </tr>
     </thead>
     <tbody>
-      {displayData}
+      {isLoading ? <Spinner /> : displayData}
     </tbody>
     <tfoot>
       <tr>
@@ -71,7 +56,7 @@ const Table = ({  rowsCount, results }: Props) => {
     </tfoot>
   </table>;
 };
-export const DummyTable = ({ rowsCount, results}: Props) => {
+export const DummyTable = ({ rowsCount, results, isLoading}: Props) => {
   
   return (
     <table>

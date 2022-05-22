@@ -3,7 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
-  height: 2rem;
-  background: gold;
+  width: 3rem;
+  height:3rem;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
 }
