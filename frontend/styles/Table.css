@@ -1,0 +1,28 @@
+.table {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table td {
+  text-align: center;
+}
+
+.table tr {
+  border-bottom: 1px solid #FFE81F;
+}
+
+.table thead {
+  border-bottom: 5px solid #FFE81F;
+}
+
+.dummyTable {
+  position: relative;
+  width: 100%;
+}
+
+.dummyTable td {
+  text-align: center;
+}

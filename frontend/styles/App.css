@@ -1,0 +1,53 @@
+@font-face {
+  font-family: Starjedi;
+  src: url('../fonts/Starjedi.ttf');
+}
+
+@font-face {
+  font-family: Aurebesh;
+  src: url('../fonts/Aurebesh.otf');
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  background-color: black;
+  color: #FFE81F;
+  letter-spacing: 2px;
+  font-size: .9rem;
+}
+
+.app-table-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 98%;
+}
+
+.app button {
+  padding: 5px;
+  background: transparent;
+  color: #FFE81F;
+  cursor: pointer;
+}
+
+.search {
+  display: flex;
+  padding: 1rem;
+}
+
+.search > * {
+  margin: 0 1rem;
+  padding: 2px;
+  background-color: transparent;
+  color: #FFE81F;
+  font-family: Starjedi;
+}
+
+.search select option {
+  background-color: black !important;
+}

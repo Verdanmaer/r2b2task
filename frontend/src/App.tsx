@@ -1,18 +1,19 @@
 import * as React from "react";
-import "./App.css";
-import Spinner from "./Spinner";
+import "../styles/App.css";
 import Table, { DummyTable } from "./Table";
+import Paginator from './Paginator';
 
 type Data = {
   count: number;
-  // rows: any[];
   results: any[];
 };
 function App() {
   const [data, setData] = React.useState<Data>({ count: 0, results: [] });
   const [dummyData, setDummyData] = React.useState<Data>({count: 0, results: []});
-  const [q, setQ] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState('');
+  const [attribute, setAttribute] = React.useState('name');
   const [isLoading, setIsLoading] = React.useState(true);
+  const [font, setFont] = React.useState('Starjedi');
 
   React.useEffect(() => {
     // TASK: add `dummy` query parameter
@@ -21,32 +22,49 @@ function App() {
       .then(setDummyData);
     fetch("/api/rows.php")
       .then((r) => r.json())
-      // HINT: API is returning `data.results` but we want `data.rows`
-      .then(setData);
+      .then(setData)
+      .then(() => {setIsLoading(false)});
   }, []);
 
-  // console.log(data);
-  // const columns = data.results[0] && Object.keys(data.results[0]);
-  // console.log(columns);
+  const setPage = (pageNumber: number) => {
+    fetch(`api/rows.php?page=${pageNumber}`)
+      .then((r) => r.json())
+      .then(setData)
+      .then(() => {setIsLoading(false)});
+  }
 
-  const search = (rows: any[]) => {
-    return rows.filter(row => row.name.toLowerCase().indexOf(q) > -1);
+  const searchByAttribute = (rows: any[], attribute: string) => {
+    return rows.filter(row => row[attribute].toLowerCase().indexOf(searchValue) > -1);
   }
 
   return (
-    <div className="App">
+    <div className="app" style={{fontFamily: font}}>
       <h1>SW table demo</h1>
+      {font==='Starjedi' ? <button style={{fontFamily: 'Aurebesh'}} onClick={() => setFont('Aurebesh')}>Aurebesh</button> : <button style={{fontFamily: 'Starjedi'}} onClick={() => setFont('Starjedi')}>Starjedi</button> }
       <h2>Dummy table here</h2>
-      {/* // HINT: notify user that we are fetching data. for example with a spinner */}
-      <div className="App-table-container">
+      <div className="app-table-container">
         <DummyTable rowsCount={dummyData.count} results={dummyData.results} isLoading={isLoading} />
       </div>
       <hr />
       <h2>Your table here</h2>
-      <input type="text" value={q} onChange={(e) => setQ(e.target.value)}/>
-      <div>
-        <Table rowsCount={data.count} results={search(data.results)} isLoading={isLoading}/>
+      <div className="search">
+        <span>Search by </span>
+        <select onChange={e => setAttribute(e.target.value)} name="attributes" id="attributes">
+          <option value='name'>Name</option>
+          <option value="birth_year">Birth Year</option>
+          <option value="eye_color">Eye Color</option>
+          <option value="gender">Gender</option>
+          <option value="hair_color">Hair Color</option>
+          <option value="height">Height</option>
+          <option value="mass">Mass</option>
+          <option value="skin_color">Skin Color</option>
+        </select>
+        <input type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)}/>
       </div>
+      <div className="app-table-container">
+        <Table rowsCount={data.count} results={searchByAttribute(data.results, attribute)} isLoading={isLoading}/>
+      </div>
+      <Paginator setPage={setPage} />
     </div>
   );
 }

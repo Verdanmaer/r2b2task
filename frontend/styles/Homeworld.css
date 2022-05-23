@@ -1,0 +1,6 @@
+.homeworld > * {
+  background-color: transparent;
+  color: #FFE81F;
+  font-family: SWfont;
+  cursor: pointer;
+}
